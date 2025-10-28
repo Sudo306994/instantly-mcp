@@ -6,6 +6,7 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StreamingHttpTransport } from './streaming-http-transport.js';
 import { registerMcpHandlers } from './handlers/mcp-handlers.js';
+import { setupOAuthEndpoints } from './oauth-config.js';
 
 let cachedApp: any = null;
 
@@ -54,7 +55,13 @@ export async function createServer() {
     throw new Error('Failed to create Express app');
   }
 
-  console.error('[Vercel] Express app initialized successfully');
+  // Setup OAuth endpoints for ChatGPT compatibility
+  setupOAuthEndpoints(app, {
+    host: '0.0.0.0',
+    port: parseInt(process.env.PORT || '3000', 10)
+  });
+
+  console.error('[Vercel] Express app initialized successfully with OAuth support');
 
   // Cache the app for subsequent requests
   cachedApp = app;
