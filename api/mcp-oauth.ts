@@ -52,10 +52,13 @@ const baseHandler = createMcpHandler(
     }
   },
   {
-    name: 'instantly-mcp',
-    version: '1.1.1',
+    // Server info
   },
-  { basePath: '/api' }
+  {
+    basePath: '/api',
+    name: 'instantly-mcp',
+    version: '1.1.1'
+  }
 );
 
 // Token verification function
@@ -96,11 +99,27 @@ const authHandler = withMcpAuth(baseHandler, verifyToken, {
 // Export Vercel serverless function
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
+    console.log('[Vercel] Incoming request:', req.method, req.url);
+    console.log('[Vercel] Headers:', JSON.stringify(req.headers, null, 2));
+
     // Convert Vercel request to standard Request
     const url = `https://${req.headers.host}${req.url}`;
+
+    // Create proper Headers object
+    const headers = new Headers();
+    Object.entries(req.headers).forEach(([key, value]) => {
+      if (value) {
+        headers.set(key, Array.isArray(value) ? value[0] : value);
+      }
+    });
+
+    // Log authorization header specifically
+    const authHeader = req.headers.authorization || req.headers['Authorization'];
+    console.log('[Vercel] Authorization header:', authHeader);
+
     const request = new Request(url, {
       method: req.method || 'GET',
-      headers: req.headers as any,
+      headers: headers,
       body: req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body) : null,
     });
 
@@ -109,6 +128,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Convert Response to Vercel response
     const body = await response.text();
+    console.log('[Vercel] Response status:', response.status);
+
     res.status(response.status);
     response.headers.forEach((value, key) => {
       res.setHeader(key, value);
@@ -116,9 +137,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.send(body);
   } catch (error: any) {
     console.error('[Handler Error]', error);
+    console.error('[Handler Error Stack]', error.stack);
     res.status(500).json({
       error: 'Internal server error',
-      message: error.message
+      message: error.message,
+      stack: error.stack
     });
   }
 }
