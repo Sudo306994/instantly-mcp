@@ -1,23 +1,17 @@
 {
-  "version": 2,
-  "builds": [
+  "buildCommand": "npm run build",
+  "rewrites": [
     {
-      "src": "api/mcp.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/mcp/(.*)",
-      "dest": "/api/mcp.js"
+      "source": "/mcp/:path*",
+      "destination": "/api/mcp"
     },
     {
-      "src": "/health",
-      "dest": "/api/mcp.js"
+      "source": "/health",
+      "destination": "/api/mcp"
     },
     {
-      "src": "/",
-      "dest": "/api/mcp.js"
+      "source": "/",
+      "destination": "/api/mcp"
     }
   ]
 }

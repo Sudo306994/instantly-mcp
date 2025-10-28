@@ -1,0 +1,79 @@
+node_modules/
+.env
+.DS_Store
+*.log
+npm-debug.log*
+
+# IDE and editor specific files
+.vscode/
+.claude/
+cursor/
+
+# Cursor MCP testing configuration
+.cursor/
+mcp.json
+cursor-mcp-config.json
+
+# Local testing files
+test-mcp-local/
+local-mcp-test/
+
+# Bug report folder
+bug report/
+
+# Test scripts and testing files
+test-*.js
+test-*.ts
+test-*.cjs
+test-*.sh
+test-*.json
+*test*.js
+*test*.ts
+*test*.cjs
+*test*.sh
+debug-*.js
+diagnose-*.js
+check-*.sh
+verify-*.js
+validate-*.ts
+quick-test.sh
+stress-test*.sh
+
+# Development and build scripts (but NOT dist/)
+build-and-test.sh
+deploy-staging.sh
+scripts/
+
+# Example files and documentation
+examples/
+manual-test-examples.md
+visual-verification-guide.md
+
+# Configuration files for development
+claude-desktop-config.json
+corrected-campaign.json
+corrected-campaign.jsonc
+production.config.js
+
+# Security: API keys and sensitive configuration
+*api-key*
+*API-KEY*
+*instantly-api*
+*INSTANTLY-API*
+.env.*
+!.env.example
+!.env.production
+*secret*
+*SECRET*
+*token*
+*TOKEN*
+check-exposed-api-key.js
+
+# Package files for distribution testing
+*.tgz
+*.dxt
+dxt-official/
+
+# Build artifacts and temporary files
+tsconfig.tsbuildinfo
+webpack.config.js
