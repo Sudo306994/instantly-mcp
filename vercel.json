@@ -38,15 +38,19 @@
   "rewrites": [
     {
       "source": "/mcp/:path*",
-      "destination": "/api/mcp"
+      "destination": "/api/mcp-oauth"
+    },
+    {
+      "source": "/mcp",
+      "destination": "/api/mcp-oauth"
     },
     {
       "source": "/health",
-      "destination": "/api/mcp"
+      "destination": "/api/mcp-oauth"
     },
     {
       "source": "/",
-      "destination": "/api/mcp"
+      "destination": "/api/mcp-oauth"
     }
   ]
 }
