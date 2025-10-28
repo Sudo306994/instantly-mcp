@@ -38,7 +38,7 @@
   "rewrites": [
     {
       "source": "/.well-known/oauth-protected-resource",
-      "destination": "/api/.well-known/oauth-protected-resource"
+      "destination": "/api/oauth-metadata"
     },
     {
       "source": "/mcp/:path*",
