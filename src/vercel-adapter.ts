@@ -6,7 +6,6 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StreamingHttpTransport } from './streaming-http-transport.js';
 import { registerMcpHandlers } from './handlers/mcp-handlers.js';
-import { TOOLS_DEFINITION } from './tools/index.js';
 
 let cachedApp: any = null;
 
@@ -34,8 +33,8 @@ export async function createServer() {
     }
   );
 
-  // Register MCP handlers
-  registerMcpHandlers(server, TOOLS_DEFINITION);
+  // Register MCP handlers (apiKey is optional, not needed for Vercel deployment)
+  registerMcpHandlers(server);
 
   // Configure HTTP transport
   const transport = new StreamingHttpTransport(server, {
